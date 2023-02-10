@@ -37,7 +37,7 @@ const Home = ({
 }: CompanyType): JSX.Element => {
   return (
     <>
-      <NextSeo title={`FAANG Data`} />
+      <NextSeo title={`${company} Stock Data`} />
       <Box mx={"auto"} pt="4" px={{ base: 3, sm: 2, md: 8 }}>
         <HeaderSection title={`${company} Data`} />
 
