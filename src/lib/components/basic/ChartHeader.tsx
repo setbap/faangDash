@@ -26,9 +26,13 @@ export default function ChartHeader({
           noOfLines={1}
           textOverflow="ellipsis"
         >
-          {title}
+          {title}{" "}
+          {disclaimer && (
+            <chakra.sub mb="1" verticalAlign={"center"} textAlign={"center"}>
+              ( {disclaimer})
+            </chakra.sub>
+          )}
         </chakra.h6>
-        {disclaimer && <chakra.sub>{disclaimer}</chakra.sub>}
       </Box>
       <Box w={"4"}>
         <Menu closeOnSelect={false}>

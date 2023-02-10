@@ -24,11 +24,12 @@ interface Props {
   additionalDumpTextToAddKeyToKeyBeUnique?: string;
   customColor?: string;
   oyLabel?: string;
+  disclaimer?: string;
 }
 
 const ChartBox = ({
   baseSpan = 1,
-
+  disclaimer,
   data,
   title,
   modelInfo = "",
@@ -83,6 +84,7 @@ const ChartBox = ({
         id={title}
       >
         <ChartHeader
+          disclaimer={disclaimer}
           chartMenu={
             <MenuList
               data-html2canvas-ignore
@@ -123,7 +125,13 @@ const ChartBox = ({
               useColorModeValue("#191919", "white"),
               useColorModeValue("#191919", "white"),
             ],
-
+            hAxis: {
+              textColor: useColorModeValue("#191919", "white"),
+            },
+            vAxis: {
+              textColor: useColorModeValue("#191919", "white"),
+              size: "4px",
+            },
             candlestick: {
               width: "100%",
               height: "100%",

@@ -4,29 +4,29 @@ import prisma from "lib/requests/prisma"
 type FaangWithChange = faang & { Change: number }
 
 export const getDayWithHighestGrowth = async (company: string = "Facebook") => {
-    const data: FaangWithChange[] = await prisma.$queryRaw`select *, max(faang."close" - faang."open") as "Change" from faang where company=${company} group BY company`;
-    return data
+	const data: FaangWithChange[] = await prisma.$queryRaw`select *, max(faang."close" - faang."open") as "Change" from faang where company=${company} group BY company`;
+	return data
 }
 
 export const getDayWithHighestGrowthInPercentage = async (company: string = "Facebook") => {
-    const data: FaangWithChange[] = await prisma.$queryRaw`select *, max((faang."close" - faang."open") * 100 / faang."open") as "Change"  from faang where company=${company} group BY company`;
-    return data
+	const data: FaangWithChange[] = await prisma.$queryRaw`select *, max((faang."close" - faang."open") * 100 / faang."open") as "Change"  from faang where company=${company} group BY company`;
+	return data
 }
 
 
 export const getDayWithHighestDrop = async (company: string = "Facebook") => {
-    const data: FaangWithChange[] = await prisma.$queryRaw`select *, min(faang."close" - faang."open") as "Change" from faang where company=${company} group BY company`;
-    return data
+	const data: FaangWithChange[] = await prisma.$queryRaw`select *, min(faang."close" - faang."open") as "Change" from faang where company=${company} group BY company`;
+	return data
 }
 
 export const getDayWithHighestDropInPercentage = async (company: string = "Facebook") => {
-    const data: FaangWithChange[] = await prisma.$queryRaw`select *, min((faang."close" - faang."open") * 100 / faang."open") as "Change"  from faang where company=${company} group BY company`;
-    return data
+	const data: FaangWithChange[] = await prisma.$queryRaw`select *, min((faang."close" - faang."open") * 100 / faang."open") as "Change"  from faang where company=${company} group BY company`;
+	return data
 }
 
 
 export const getMonthlyCandleInfo = async (company: string = "Facebook") => {
-    const queryRes: CandlePureInfo[] = await prisma.$queryRaw`
+	const queryRes: CandlePureInfo[] = await prisma.$queryRaw`
 WITH end_month_data AS (
 	SELECT
 		company,
@@ -108,22 +108,20 @@ start_month_data AS (
   	a.company, a.year , a.month;
   `;
 
-
-
-    const data = queryRes.map(({ close, high, low, open, yearMonth }) => [yearMonth, low, open, close, high]);
-    data.unshift(["Month", company, "", "", ""],);
-    return {
-        data
-    }
+	const data = queryRes.filter(row => row.year > 2011 && row.year < 2020).map(({ close, high, low, open, yearMonth }) => [yearMonth, low, open, close, high]);
+	data.unshift(["Month", company, "", "", ""],);
+	return {
+		data
+	}
 }
 
 export interface CandlePureInfo {
-    "company": string,
-    "year": number,
-    "month": number,
-    yearMonth: string,
-    low: number;
-    open: number;
-    close: number;
-    high: number;
+	"company": string,
+	"year": number,
+	"month": number,
+	yearMonth: string,
+	low: number;
+	open: number;
+	close: number;
+	high: number;
 }

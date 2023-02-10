@@ -75,7 +75,7 @@ const LineChartWithBar = ({
   showMonthly = false,
   infoSizePercentage = 50,
   customColor = "var(--chakra-colors-green-300)",
-  defultSelectedRange = 2022
+  defultSelectedRange = 2022,
 }: Props) => {
   const chartRef = useRef<null | HTMLDivElement>(null);
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
@@ -114,10 +114,12 @@ const LineChartWithBar = ({
   };
   const minDate = isNotDate ? null : getMinDate();
   const [selectedDate, setSelectedDate] = useState<number | string>(
-    defultSelectedRange === 2022 ?
-      Math.round(
-        (maxDate!.toDate().getTime() - new Date(2022, 0, 1).getTime()) / (1000 * 60 * 60 * 24)
-      ) + 1 : 'all'
+    defultSelectedRange === 2022
+      ? Math.round(
+          (maxDate!.toDate().getTime() - new Date(2022, 0, 1).getTime()) /
+            (1000 * 60 * 60 * 24)
+        ) + 1
+      : "all"
   );
 
   const changeDataToMonethly = () => {
@@ -167,25 +169,23 @@ const LineChartWithBar = ({
     if (isNotDate) {
       return;
     }
-    if (defultSelectedRange === 'all') {
-      setChartData(data)
+    if (defultSelectedRange === "all") {
+      setChartData(data);
       return;
     }
     filterDateAccordingDay(
       Math.round(
-        (maxDate!.toDate().getTime() -
-          new Date(2022, 0, 1).getTime()) /
-        (1000 * 60 * 60 * 24)
+        (maxDate!.toDate().getTime() - new Date(2022, 0, 1).getTime()) /
+          (1000 * 60 * 60 * 24)
       ) + 1
     );
   };
 
   const resetToAll = () => {
-    setChartData(data)
-    setSelectedDate('all')
+    setChartData(data);
+    setSelectedDate("all");
     return;
-  }
-
+  };
 
   useEffect(() => {
     resetChartData();
@@ -437,12 +437,8 @@ const LineChartWithBar = ({
                     day:
                       Math.round(
                         (maxDate!.toDate().getTime() -
-                          new Date(
-                            2022,
-                            0,
-                            1
-                          ).getTime()) /
-                        (1000 * 60 * 60 * 24)
+                          new Date(2022, 0, 1).getTime()) /
+                          (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: "2022".toString(),
                   },

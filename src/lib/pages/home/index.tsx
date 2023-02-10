@@ -6,6 +6,7 @@ import StackedAreaChart from "lib/components/charts/StackedAreaGraph";
 import BarGraph from "lib/components/charts/BarGraph";
 import { CompanyType } from "pages/[company]";
 import CandleChart from "lib/components/charts/CandleChart";
+import CalendarChart from "lib/components/charts/CalendarChart";
 
 const colors = [
   "#4caf50",
@@ -115,7 +116,6 @@ const Home = ({
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
           <HeaderSection title="Average Volume of each Month" />
-
           <StackedAreaChart
             isNotDate
             extraInfoToTooltip=""
@@ -131,7 +131,6 @@ const Home = ({
               key: key,
             }))}
           />
-
           {/* <LineChartWithBar
             data={dailyTemperature}
             queryLink={""}
@@ -161,12 +160,22 @@ const Home = ({
               },
             ]}
           />
-          <HeaderSection title="Stock Price Change">{``}</HeaderSection>
-
+          <HeaderSection title="Stock Price Change" />
           <CandleChart
-            title={`Monthly Share Data of ${company}`}
+            disclaimer="from 2012 to 2020"
+            title={` The monthly stock price of ${company}`}
             data={monthlyCandleInfo.data}
             baseSpan={3}
+          />
+          <HeaderSection title="Stock Price Change" />
+          <CalendarChart
+            xAxisDataKey={""}
+            areaDataKey={""}
+            title={""}
+            tooltipTitle={""}
+            data={monthlyCandleInfo.data}
+            years={[]}
+            selectedYear={0}
           />
         </SimpleGrid>
       </Box>
