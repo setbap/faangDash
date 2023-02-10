@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./faang.db"
+}
+
+model faang {
+  company String
+  id      Int    @id @default(autoincrement())
+  date    String
+  open    Float
+  high    Float
+  low     Float
+  close   Float
+  volume  Float
+}
