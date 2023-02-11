@@ -12,6 +12,42 @@ export const getDayWithMinVolume = async (company: string = "Facebook") => {
   const data: faang[] = await prisma.$queryRaw`select *, min(volume) from faang where company=${company}`;
   return data
 }
+
+export async function getCompanyYearVolume(company: string = "Facebook", year: number = 2016): Promise<YearlyStockVolume> {
+  const q1 = `
+  SELECT
+		date,volume
+	FROM
+		faang
+	where company='${company}' and strftime('%Y',date) ='${year}'
+  `
+  const data: { date: string, volume: number }[] = await prisma.$queryRawUnsafe(q1);
+
+  const q2 = `
+    SELECT
+ 		min(volume) min,MAX(volume) max
+ 	FROM
+ 		faang
+ 	where company='${company}' and strftime('%Y',date) ='${year}'
+  `
+  const minmax: { min: number, number: number }[] = await prisma.$queryRawUnsafe(q2)
+
+
+  return { data, year, minmax: minmax[0] };
+}
+
+export const getYearRange = async (company: string = "Facebook") => {
+  const data: { year: number }[] = await prisma.$queryRaw`
+  SELECT
+  	distinct strftime('%Y',date) as year
+  FROM
+  	faang	
+  where 
+  	company=${company}
+  `;
+  return data;
+}
+
 export const getMonthlyVolume = async (company: string = "Facebook") => {
   const data: MonthlyVolume[] = await prisma.$queryRaw`
  	SELECT
@@ -50,4 +86,17 @@ interface MonthlyVolume {
   "sum volume": number;
   year: number;
   month: number;
+}
+
+
+export interface YearlyStockVolume {
+  data: {
+    date: string;
+    volume: number;
+  }[];
+  year: number;
+  minmax: {
+    min: number;
+    number: number;
+  };
 }

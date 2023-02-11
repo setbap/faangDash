@@ -60,7 +60,7 @@ const CalendarChart = ({
 }: Props) => {
   const chartRef = useRef<null | HTMLDivElement>(null);
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
-  const [defultViewSetting, setDefultViewSetting] = useState(defultDateView);
+
   const [selectedDate, setSelectedDate] = useState<number | string>(
     selectedYear
   );
@@ -71,7 +71,7 @@ const CalendarChart = ({
   );
   const filterDateAccordingYear = (year: number) => {
     const newData = data.filter((item) => {
-      return moment(item[xAxisDataKey]).year() === year;
+      return moment(item[xAxisDataKey]).year() == year;
     });
     setSelectedDate(year);
     setChartData(newData);
@@ -150,7 +150,7 @@ const CalendarChart = ({
           title={title}
         />
         <Box p={"0"} />
-        <Box height={425} width="full">
+        <Box height={360} width="full">
           <ResponsiveCalendar
             data={chartData.map((d: any) => ({
               value: d[areaDataKey],
@@ -222,7 +222,7 @@ const CalendarChart = ({
         </Box>
 
         <AnimatePresence>
-          {!isNotDate && defultViewSetting === "day" && (
+          {!isNotDate && (
             <MotionBox
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
@@ -232,12 +232,12 @@ const CalendarChart = ({
               <Box p={"1"} />
               <Box height={"36px"}>
                 <ButtonGroup size={"xs"} variant="outline" spacing={1}>
-                  {years.map((yaer) => (
+                  {years.map((year) => (
                     <Button
-                      variant={selectedDate === yaer ? "solid" : "outline"}
-                      onClick={() => filterDateAccordingYear(yaer)}
+                      variant={selectedDate == year ? "solid" : "outline"}
+                      onClick={() => filterDateAccordingYear(year)}
                     >
-                      {yaer}
+                      {year}
                     </Button>
                   ))}
                 </ButtonGroup>

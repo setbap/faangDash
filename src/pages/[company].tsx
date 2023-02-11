@@ -1,8 +1,10 @@
 import Company from "lib/pages/home";
 import {
+  getCompanyYearVolume,
   getDayWithMaxVolume,
   getDayWithMinVolume,
   getMonthlyVolume,
+  getYearRange,
 } from "lib/requests/home";
 import {
   getDayWithHighestDrop,
@@ -39,6 +41,8 @@ export async function getStaticProps({
     dayWithHighestGrowth,
     dayWithHighestGrowthInPercentage,
     monthlyCandleInfo,
+    companyYearVolume,
+    yearRange,
   ] = await Promise.all([
     getDayWithMaxVolume(company),
     getDayWithMinVolume(company),
@@ -48,6 +52,8 @@ export async function getStaticProps({
     getDayWithHighestGrowth(company),
     getDayWithHighestGrowthInPercentage(company),
     getMonthlyCandleInfo(company),
+    getCompanyYearVolume(company),
+    getYearRange(company),
   ]);
   return {
     props: {
@@ -60,6 +66,8 @@ export async function getStaticProps({
         dayWithHighestGrowth,
         dayWithHighestGrowthInPercentage,
         monthlyCandleInfo,
+        companyYearVolume,
+        yearRange,
       },
       company: company,
     },

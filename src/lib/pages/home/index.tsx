@@ -33,6 +33,8 @@ const Home = ({
     dayWithHighestGrowth,
     dayWithHighestGrowthInPercentage,
     monthlyCandleInfo,
+    companyYearVolume,
+    yearRange,
   },
   company,
 }: CompanyType): JSX.Element => {
@@ -168,14 +170,16 @@ const Home = ({
             baseSpan={3}
           />
           <HeaderSection title="Stock Price Change" />
+
           <CalendarChart
-            xAxisDataKey={""}
-            areaDataKey={""}
-            title={""}
+            baseSpan={3}
+            xAxisDataKey={"date"}
+            areaDataKey={"volume"}
+            title={"Daily Volume"}
             tooltipTitle={""}
-            data={monthlyCandleInfo.data}
-            years={[]}
-            selectedYear={0}
+            data={companyYearVolume.data}
+            years={yearRange.map(({ year }) => year)}
+            selectedYear={2016}
           />
         </SimpleGrid>
       </Box>
