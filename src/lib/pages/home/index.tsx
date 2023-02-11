@@ -117,6 +117,18 @@ const Home = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
+          <HeaderSection title="Daily Stock Volume" />
+          <CalendarChart
+            baseSpan={3}
+            xAxisDataKey={"date"}
+            areaDataKey={"volume"}
+            title={`${company} Daily Stock Volume`}
+            tooltipTitle={""}
+            selectExtraData={(year) => ({ year, company })}
+            data={companyYearVolume.data}
+            years={yearRange.map(({ year }) => year)}
+            selectedYear={2016}
+          />
           <HeaderSection title="Average Volume of each Month" />
           <StackedAreaChart
             isNotDate
@@ -168,19 +180,6 @@ const Home = ({
             title={` The monthly stock price of ${company}`}
             data={monthlyCandleInfo.data}
             baseSpan={3}
-          />
-          <HeaderSection title="Daily Stock Volume" />
-
-          <CalendarChart
-            baseSpan={3}
-            xAxisDataKey={"date"}
-            areaDataKey={"volume"}
-            title={`${company} Daily Stock Volume`}
-            tooltipTitle={""}
-            selectExtraData={(year) => ({ year, company })}
-            data={companyYearVolume.data}
-            years={yearRange.map(({ year }) => year)}
-            selectedYear={2016}
           />
         </SimpleGrid>
       </Box>
