@@ -262,7 +262,9 @@ const CalendarChart = ({
             onChange={(e) => filterDateAccordingYear(+e.target.value)}
           >
             {years.map((year) => (
-              <option value={year}>{year}</option>
+              <option key={year} value={year}>
+                {year}
+              </option>
             ))}
           </Select>
         </Box>

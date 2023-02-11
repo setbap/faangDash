@@ -36,7 +36,7 @@ const About = () => {
         <Box position={"absolute"} bottom="8px" width={"100%"} px="8px">
           <HeaderSection title={"elSina"}>
             {`
-  __[Page Source | elSina(SETBAP)](https://github.com/setbap/ClimatDash)__
+  __[Page Source | elSina(SETBAP)](http://github.com/setbap/faangdash)__
 `}
           </HeaderSection>
         </Box>
@@ -70,14 +70,14 @@ __Github__
       </SimpleGrid>
       <HeaderSection title={"About"}>
         {`
-This dashboard is made with love by members of MetricsDao Community, in partnership with MetricsDao and NOAA. We hope it serves as a valuable window into high-level metrics.
+This dashboard is made with love by members of MetricsDao Community, in partnership with MetricsDao. We hope it serves as a valuable window into high-level metrics.
 `}
       </HeaderSection>
       <Box mb={"5"} />
       <HeaderSection title={"Methodology"}>
         {`
 
--   Data is drawn from __National Centers for Environmental Information__.
+-   Data is drawn from __[Kaggle](https://www.kaggle.com/datasets/aayushmishra1512/faang-complete-stock-data)__.
     
     
 

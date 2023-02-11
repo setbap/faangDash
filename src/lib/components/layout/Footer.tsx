@@ -6,9 +6,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
-import { FlipSideIcon, MetricsDoa } from "../basic/FlipSideIcon";
+import { MetricsDoa } from "../basic/FlipSideIcon";
 
 export default function Footer() {
   const baseColor = useColorModeValue("gray.700", "whiteAlpha.700");
@@ -46,7 +45,7 @@ export default function Footer() {
           <Text style={{ marginInlineStart: "0.3em" }}>&</Text>
           <Link
             style={{ marginInlineStart: "0.25em" }}
-            href={"http://github.com/setbap/climatdash"}
+            href={"http://github.com/setbap/faangdash"}
             isExternal
             display={"inline-flex"}
           >
@@ -55,14 +54,6 @@ export default function Footer() {
               <FaGithub />
             </Box>
           </Link>
-
-          {/* 
-          <SocialButton label={"Flipside Website"} href={"http://flipsidecrypto.xyz/"}>
-
-          </SocialButton> */}
-          {/* <SocialButton href="http://github.com/setbap" label={"Github"}>
-
-          </SocialButton> */}
         </Stack>
       </Container>
     </Box>

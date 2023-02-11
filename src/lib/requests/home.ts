@@ -1,4 +1,4 @@
-import { faang } from "@prisma/client"
+import { faang, Prisma, PrismaClient } from "@prisma/client"
 import prisma from "lib/requests/prisma"
 
 
@@ -13,7 +13,7 @@ export const getDayWithMinVolume = async (company: string = "Facebook") => {
   return data
 }
 
-export async function getCompanyYearVolume(company: string = "Facebook", year: number = 2016): Promise<YearlyStockVolume> {
+export async function getCompanyYearVolume(company: string = "Facebook", year: number = 2016, prismaC: PrismaClient = prisma): Promise<YearlyStockVolume> {
   const q1 = `
   SELECT
 		date,volume
@@ -21,7 +21,7 @@ export async function getCompanyYearVolume(company: string = "Facebook", year: n
 		faang
 	where company='${company}' and strftime('%Y',date) ='${year}'
   `
-  const data: { date: string, volume: number }[] = await prisma.$queryRawUnsafe(q1);
+  const data: { date: string, volume: number }[] = await prismaC.$queryRawUnsafe(q1);
 
   const q2 = `
     SELECT
@@ -30,7 +30,7 @@ export async function getCompanyYearVolume(company: string = "Facebook", year: n
  		faang
  	where company='${company}' and strftime('%Y',date) ='${year}'
   `
-  const minmax: { min: number, number: number }[] = await prisma.$queryRawUnsafe(q2)
+  const minmax: { min: number, number: number }[] = await prismaC.$queryRawUnsafe(q2)
 
 
   return { data, year, minmax: minmax[0] };
