@@ -145,17 +145,7 @@ const Home = ({
               key: key,
             }))}
           />
-          {/* <LineChartWithBar
-            data={dailyTemperature}
-            queryLink={""}
-            title={"Temperature in FR"}
-            baseSpan={3}
-            customColor={colors[0]}
-            barColor={colors[2]}
-            xAxisDataKey="Day"
-            barDataKey={"FR Temp"}
-            lineDataKey="avg temp"
-          /> */}
+
           <HeaderSection title="Total Volume each month" />
           <BarGraph
             isNotDate

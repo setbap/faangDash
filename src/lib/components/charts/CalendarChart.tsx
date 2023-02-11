@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Button,
   CircularProgress,
+  Select,
 } from "@chakra-ui/react";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
@@ -22,6 +23,7 @@ import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 import { ModalInfo } from "../basic/ModalInfo";
 import ChartImageExportMenu from "../basic/ChartImageExportMenu";
 import { YearlyStockVolume } from "lib/requests/home";
+import millify from "millify";
 
 interface Props {
   modalInfo?: string;
@@ -75,6 +77,7 @@ const CalendarChart = ({
   );
   const filterDateAccordingYear = (year: number) => {
     setLoading(true);
+
     fetch(
       `/api/get-year-volume?${new URLSearchParams(
         selectExtraData(year)
@@ -103,6 +106,7 @@ const CalendarChart = ({
 
   return (
     <GridItem
+      position={"relative"}
       rowSpan={1}
       ref={chartRef}
       color={textColor}
@@ -137,7 +141,7 @@ const CalendarChart = ({
         display="flex"
         flexDir={"column"}
         alignItems="center"
-        height={"480px"}
+        height={"460px"}
         // height={"400px"}
         id={title}
       >
@@ -221,7 +225,6 @@ const CalendarChart = ({
               tooltip: {
                 container: {
                   background: bgCardReverse,
-
                   fontSize: 15,
                 },
               },
@@ -243,30 +246,27 @@ const CalendarChart = ({
           />
         </Box>
 
-        <AnimatePresence>
-          {!isNotDate && (
-            <MotionBox
-              animate={{ opacity: 1 }}
-              initial={{ opacity: 0 }}
-              exit={{ opacity: 0 }}
-              height={"36px"}
-            >
-              <Box p={"1"} />
-              <Box height={"36px"}>
-                <ButtonGroup size={"xs"} variant="outline" spacing={1}>
-                  {years.map((year) => (
-                    <Button
-                      variant={selectedDate == year ? "solid" : "outline"}
-                      onClick={() => filterDateAccordingYear(year)}
-                    >
-                      {year}
-                    </Button>
-                  ))}
-                </ButtonGroup>
-              </Box>
-            </MotionBox>
-          )}
-        </AnimatePresence>
+        <Box
+          justifyContent={"center"}
+          alignItems="center"
+          display={"flex"}
+          width={"200px"}
+          height={"36px"}
+        >
+          <Box width={"100px"}>Select Year :</Box>
+          <Select
+            width={"100px"}
+            value={selectedDate}
+            variant="outline"
+            placeholder="Choose Year"
+            onChange={(e) => filterDateAccordingYear(+e.target.value)}
+          >
+            {years.map((year) => (
+              <option value={year}>{year}</option>
+            ))}
+          </Select>
+        </Box>
+
         <CircularProgress
           position={"absolute"}
           right="4"
