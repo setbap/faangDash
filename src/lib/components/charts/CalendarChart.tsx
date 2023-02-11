@@ -6,6 +6,7 @@ import {
   MenuDivider,
   ButtonGroup,
   Button,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
@@ -20,6 +21,7 @@ import MotionBox from "../motion/Box";
 import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 import { ModalInfo } from "../basic/ModalInfo";
 import ChartImageExportMenu from "../basic/ChartImageExportMenu";
+import { YearlyStockVolume } from "lib/requests/home";
 
 interface Props {
   modalInfo?: string;
@@ -32,8 +34,7 @@ interface Props {
   isNotDate?: boolean;
   domain?: [number, number];
   baseSpan?: number;
-  defultSelectedRange?: number | string;
-  defultDateView?: "month" | "day";
+
   queryLink?: string;
   disclaimer?: string;
   additionalDumpTextToAddKeyToKeyBeUnique?: string;
@@ -41,13 +42,14 @@ interface Props {
   years: number[];
   selectedYear: number;
   infoSizePercentage?: number | "full";
+  selectExtraData: (year: number) => any;
 }
 
 const CalendarChart = ({
   years = [2021, 2022],
   selectedYear = 2022,
   baseSpan = 1,
-  defultDateView = "day",
+
   queryLink,
   isNotDate = false,
   areaDataKey,
@@ -57,9 +59,11 @@ const CalendarChart = ({
   title,
   modalInfo = "",
   infoSizePercentage = 50,
+  selectExtraData,
 }: Props) => {
   const chartRef = useRef<null | HTMLDivElement>(null);
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
+  const [loading, setLoading] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState<number | string>(
     selectedYear
@@ -70,15 +74,31 @@ const CalendarChart = ({
     })
   );
   const filterDateAccordingYear = (year: number) => {
-    const newData = data.filter((item) => {
-      return moment(item[xAxisDataKey]).year() == year;
-    });
-    setSelectedDate(year);
-    setChartData(newData);
+    setLoading(true);
+    fetch(
+      `/api/get-year-volume?${new URLSearchParams(
+        selectExtraData(year)
+      ).toString()}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((data: YearlyStockVolume) => {
+        setSelectedDate(year);
+        setChartData(data.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    // const newData = data.filter((item) => {
+    //   return moment(item[xAxisDataKey]).year() == year;
+    // });
   };
 
   const bgTooltip = useColorModeValue("gray.300", "gray.700");
   const bgCard = useColorModeValue("white", "#191919");
+  const bgCardReverse = useColorModeValue("white", "#232323");
   const textColor = useColorModeValue("gray.900", "gray.100");
 
   return (
@@ -107,6 +127,7 @@ const CalendarChart = ({
         infoSizePercentage={infoSizePercentage}
         largeSpanSize={baseSpan}
       />
+
       <Box
         flex={1}
         px="6"
@@ -121,7 +142,7 @@ const CalendarChart = ({
         id={title}
       >
         <ChartHeader
-          disclaimer={disclaimer}
+          disclaimer={disclaimer ?? `in ${selectedDate}`}
           chartMenu={
             <MenuList
               data-html2canvas-ignore
@@ -149,6 +170,7 @@ const CalendarChart = ({
           modalInfo={modalInfo}
           title={title}
         />
+
         <Box p={"0"} />
         <Box height={360} width="full">
           <ResponsiveCalendar
@@ -160,7 +182,7 @@ const CalendarChart = ({
             to={moment(`${+selectedDate + 1}-01-01`)
               .subtract(1, "day")
               .toDate()}
-            emptyColor="#aaa2"
+            emptyColor={textColor}
             colors={[
               "#cfc",
               "#bfb",
@@ -198,7 +220,7 @@ const CalendarChart = ({
               },
               tooltip: {
                 container: {
-                  background: "#232323",
+                  background: bgCardReverse,
 
                   fontSize: 15,
                 },
@@ -245,6 +267,13 @@ const CalendarChart = ({
             </MotionBox>
           )}
         </AnimatePresence>
+        <CircularProgress
+          position={"absolute"}
+          right="4"
+          bottom="8"
+          isIndeterminate
+          hidden={!loading}
+        />
       </Box>
     </GridItem>
   );

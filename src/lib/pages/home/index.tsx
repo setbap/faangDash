@@ -169,14 +169,15 @@ const Home = ({
             data={monthlyCandleInfo.data}
             baseSpan={3}
           />
-          <HeaderSection title="Stock Price Change" />
+          <HeaderSection title="Daily Stock Volume" />
 
           <CalendarChart
             baseSpan={3}
             xAxisDataKey={"date"}
             areaDataKey={"volume"}
-            title={"Daily Volume"}
+            title={`${company} Daily Stock Volume`}
             tooltipTitle={""}
+            selectExtraData={(year) => ({ year, company })}
             data={companyYearVolume.data}
             years={yearRange.map(({ year }) => year)}
             selectedYear={2016}

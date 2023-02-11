@@ -29,7 +29,8 @@ export default function ChartHeader({
           {title}{" "}
           {disclaimer && (
             <chakra.sub mb="1" verticalAlign={"center"} textAlign={"center"}>
-              ( {disclaimer})
+              {" "}
+              ({disclaimer})
             </chakra.sub>
           )}
         </chakra.h6>
