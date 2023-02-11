@@ -1,11 +1,24 @@
 
-import { PrismaClient } from "@prisma/client";
-import { getCompanyYearVolume } from "lib/requests/home";
 
+import {faangData} from '../../lib/utility/faang'
 
+const getCorrectTypeData = ():{ date: string,year:number,company:string, volume: number }[] => {
+  return faangData.map(row => ({company:row.company,date:row.date,year:new Date(row.date).getFullYear() ,volume:row.volume}))
+}
+const fullData = getCorrectTypeData();
+
+function getCompanyYearVolume(company: string = "Facebook", year: number = 2016):{
+  data : { date: string, volume: number }[],
+  year:number
+} {
+  return ({
+    data : fullData.filter(row => row.year == year && company == row.company),
+    year
+  })
+}
 
 export default async function addressHandler(req: any, res: any) {
-  const prisma = new PrismaClient();
+  
   const {
     query: { company, year },
     method,
@@ -15,7 +28,7 @@ export default async function addressHandler(req: any, res: any) {
   switch (method) {
     case "GET":
 
-      const data = await getCompanyYearVolume(company, +year, prisma);
+      const data = getCompanyYearVolume(company, +year);
       res.status(200).json(data);
       break;
 
