@@ -34,7 +34,7 @@ const Home = (): JSX.Element => {
       <NextSeo title={`Faang Stock Data overview`} />
       <Box mx={"auto"} pt="4" px={{ base: 3, sm: 2, md: 8 }}>
         <SimpleGrid
-          my={"6"}
+          my={"5"}
           columns={{ base: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 3, lg: 4 }}
         >
@@ -58,8 +58,8 @@ The dataset is reliable and we used Yahoo Stocks to verify that the given data's
 The general trend of all stocks' price features were increasing over time. This is in line with the reason FAANG stocks are popular. They are considered "Blue Chip" stocks since they're meant to be held for a long time due to their upward trend. The FAANG stocks are often grouped together since they relate to the larger technology companies in Silicon Valley based on their stock prices. We saw from our Close Prices plot that they have an increase over time which shows us why these stocks are "Blue Chip".
 `}
           </HeaderSection>
+          <HeaderSection title={`Links`} />
         </SimpleGrid>
-
         <SimpleGrid
           position={"relative"}
           transition={"all 0.9s ease-in-out"}
