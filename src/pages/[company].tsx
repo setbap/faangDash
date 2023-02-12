@@ -1,4 +1,4 @@
-import Company from "lib/pages/home";
+import Company from "lib/pages/company";
 import {
   getCompanyYearVolume,
   getDayWithMaxVolume,
