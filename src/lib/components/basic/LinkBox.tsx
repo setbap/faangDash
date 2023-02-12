@@ -50,10 +50,16 @@ function CompanyLinkBox({
           flexDir={"column"}
           justifyContent={"center"}
           alignItems="center"
-          gap={"4"}
+          gap={"6"}
         >
           <Icon />
-          <Box>{path}</Box>
+
+          <Box
+            fontWeight={"bold"}
+            fontSize={["xl", "2xl", "3xl", "4xl", "5xl"]}
+          >
+            {path}
+          </Box>
         </Box>
       </GridItem>
     </AspectRatio>
