@@ -117,7 +117,11 @@ const Home = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
-          <HeaderSection title="Daily Stock Volume" />
+          <HeaderSection title="Daily Stock Volume">
+            {`
+In this section, you can see the daily volume of this stock. By default, the year is 2016, but you can change it from 2012 to 2020. Further, the darker colors indicate that that particular day had a high volume and the volumes are smaller when the color is lighter.
+          `}
+          </HeaderSection>
           <CalendarChart
             baseSpan={3}
             xAxisDataKey={"date"}
@@ -129,7 +133,11 @@ const Home = ({
             years={yearRange.map(({ year }) => year)}
             selectedYear={2016}
           />
-          <HeaderSection title="Average Volume of each Month" />
+          <HeaderSection title="Average volume per month">
+            {`
+In this section, you can see the highest and lowest daily volume of a stock in each month. The average daily volume in each month is also shown.
+            `}
+          </HeaderSection>
           <StackedAreaChart
             isNotDate
             extraInfoToTooltip=""
@@ -146,7 +154,11 @@ const Home = ({
             }))}
           />
 
-          <HeaderSection title="Total Volume each month" />
+          <HeaderSection title="Total Volume each month">
+            {`
+In this section, you can see the total volume of a stock every month.
+            `}
+          </HeaderSection>
           <BarGraph
             isNotDate
             extraInfoToTooltip=""
@@ -164,7 +176,11 @@ const Home = ({
               },
             ]}
           />
-          <HeaderSection title="Stock Price Change" />
+          <HeaderSection title="Stock Price Change">
+            {`
+In this section, you can see the changes in the price of a stock every month. In addition, the opening price and the closing price of each month can also be seen. Green candles indicate an increase in price compared to the previous month and red candles indicate a decrease in price compared to the previous month.
+`}
+          </HeaderSection>
           <CandleChart
             disclaimer="from 2012 to 2020"
             title={` The monthly stock price of ${company}`}
